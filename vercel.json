@@ -1,19 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "public/**",
-      "use": "static"
-    },
-    {
-      "src": "mock_data/**",
-      "use": "static"
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.9"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/chat",
