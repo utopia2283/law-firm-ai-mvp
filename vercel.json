@@ -1,10 +1,18 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.py": {
-      "runtime": "python3.9"
+  "builds": [
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
+    },
+    {
+      "src": "public/**",
+      "use": "static"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/chat",
