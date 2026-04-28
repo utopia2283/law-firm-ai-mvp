@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "public/**",
+      "use": "static"
+    },
+    {
+      "src": "mock_data/**",
+      "use": "static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "api/chat.py"
+    },
+    {
+      "src": "/api/dashboard",
+      "dest": "api/dashboard.py"
+    },
+    {
+      "src": "/api/files",
+      "dest": "api/files.py"
+    },
+    {
+      "src": "/api/generate",
+      "dest": "api/generate.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "public/$1"
+    }
+  ]
+}

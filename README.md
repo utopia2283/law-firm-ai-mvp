@@ -1,50 +1,71 @@
-# 法律樓 AI 系統 MVP
+# 法律樓 AI 系統 MVP | Law Firm AI System MVP
 
-## 專案簡介
+![Status](https://img.shields.io/badge/status-MVP-blue)
+![Python](https://img.shields.io/badge/Python-3.9+-green)
+![Vercel](https://img.shields.io/badge/Vercel-Ready-black)
 
-本案為法律樓 AI 系統之 MVP（Minimum Viable Product），展示 AI 輔助法律服務之核心功能。
+律師樓內部 AI 系統，用於法律文件自動化處理。
 
-## 功能列表
+## 功能 | Features
 
-1. **自然語言查詢（NLU Query）** - 支援使用者以自然語言提問，系統解析語意並回應
-2. **文件分析（Document Analysis）** - 上傳法律文件，AI 自動分析關鍵條款與風險點
-3. **案例檢索（Case Retrieval）** - 快速搜尋相似案例與相關法條
-4. **智慧分類（Smart Classification）** - 自動分類案件類型與法律領域
-5. **術語解釋（Terminology Explainer）** - 查詢法律術語之定義與適用情境
-6. **合約生成（Contract Drafting）** - 依據模板與輸入條件生成合約草稿
-7. **法規更新（Regulation Updates）** - 追蹤最新法規異動並通知相關當事人
-8. **會議紀錄（Meeting Minutes）** - 自動生成會議摘要與待辦事項
-9. **翻譯服務（Translation Service）** - 中英雙語法律文件互譯
-10. **行事曆整合（Calendar Integration）** - 與 Outlook/Google Calendar 同步庭期與期限
-11. **收費計算（Fee Calculator）** - 依案件複雜度與時間估算律師費用
+- 💬 **AI 法律助理** - Telegram Bot 風格介面
+- 📜 **法例查詢** - RAG 知識庫即時檢索香港法例
+- ⚖️ **案例分析** - 智能分析案件要點及法律爭議
+- 📝 **文件生成** - 自動生成判詞、律師信
+- 📊 **BI 數據大屏** - 視覺化系統使用統計
+- 🔐 **管理後台** - 檔案管理、用戶權限控制
 
-## 安裝方式
+## 部署 | Deployment
+
+### Vercel (推薦)
+
+1. Fork 此專案
+2. 在 [Vercel](https://vercel.com) Import 專案
+3. Deploy！
+
+```bash
+# 或者使用 Vercel CLI
+npm i -g vercel
+vercel
+```
+
+### 本地運行
 
 ```bash
 pip install -r requirements.txt
 python app.py
+# 打开 http://localhost:5000
 ```
 
-啟動後開啟瀏覽器造訪：http://localhost:5000
-
-## 系統架構
+## 架構 | Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│            Frontend (Web UI)            │
-├─────────────────────────────────────────┤
-│            Flask API Server             │
-│         (flask / flask-cors)            │
-├─────────────────────────────────────────┤
-│          AI Processing Layer            │
-│  (NLU / Document Analysis / Search)     │
-└─────────────────────────────────────────┘
+├── api/                  # Vercel Serverless Functions
+│   ├── chat.py          # AI 聊天接口
+│   ├── dashboard.py    # 數據大屏接口
+│   ├── files.py         # 檔案管理接口
+│   └── generate.py      # 文檔生成接口
+├── public/              # 靜態文件
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── mock_data/           # 模擬數據
+│   ├── hk_laws.json     # 香港法例
+│   ├── sample_cases.json # 案例
+│   └── templates.json   # 範本
+├── vercel.json          # Vercel 配置
+└── requirements.txt     # Python 依賴
 ```
 
-## 演示說明
+## 技術棧 | Tech Stack
 
-**注意：本 MVP 採用模擬資料（Mock Data）展示系統功能。所有 AI 回應均為預設回覆，實際整合大型語言模型（LLM）將於下一階段完成。**
+- **Frontend**: HTML5, CSS3, Vanilla JS
+- **Backend**: Python Serverless (Vercel)
+- **Design**: Dark Luxury Theme (#0a0a0f + #d4af37)
+
+## 聲明 | Disclaimer
+
+此為 MVP 演示版本，所有 AI 回應為模擬數據，僅供展示用途。
 
 ---
-
-*法律樓 AI 系統 MVP - 2026*
+Made with ♥ for Hong Kong Legal Industry
