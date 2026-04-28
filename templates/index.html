@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東風 AI 法律系統 | Dong Feng AI Legal System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">⚖</span>
+                <span class="logo-text">東風 AI</span>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="chat">
+                    <span class="tab-icon">💬</span>
+                    <span class="tab-label">AI 助理</span>
+                </button>
+                <button class="tab-btn" data-tab="dashboard">
+                    <span class="tab-icon">📊</span>
+                    <span class="tab-label">數據大屏</span>
+                </button>
+                <button class="tab-btn" data-tab="admin">
+                    <span class="tab-icon">⚙</span>
+                    <span class="tab-label">管理後台</span>
+                </button>
+            </nav>
+            <div class="user-info">
+                <span class="user-name">陳律師</span>
+                <span class="user-role">Admin</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat View -->
+            <section id="chat-view" class="view active">
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <div class="sidebar-header">
+                            <h3>功能選單</h3>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="sendQuickMessage('你好，請介紹一下系統功能')">
+                                <span>📋</span> 系統介紹
+                            </button>
+                            <button class="action-btn" onclick="sendQuickMessage('請查詢公司法第十四條')">
+                                <span>📜</span> 法例查詢
+                            </button>
+                            <button class="action-btn" onclick="sendQuickMessage('請提供民事合約糾紛的案例')">
+                                <span>⚖</span> 案例參考
+                            </button>
+                            <button class="action-btn" onclick="sendQuickMessage('請幫我生成一份律師信')">
+                                <span>✉</span> 生成律師信
+                            </button>
+                            <button class="action-btn" onclick="sendQuickMessage('請幫我生成判詞草稿')">
+                                <span>📝</span> 生成判詞
+                            </button>
+                        </div>
+                        <div class="file-upload-area">
+                            <h4>📎 文件上傳</h4>
+                            <input type="file" id="file-input" hidden multiple accept=".pdf,.docx,.txt,.mp3,.m4a">
+                            <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                                點擊上傳文件
+                            </button>
+                            <div id="uploaded-files" class="uploaded-files"></div>
+                        </div>
+                    </div>
+                    <div class="chat-main">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message bot">
+                                <div class="message-avatar">🤖</div>
+                                <div class="message-content">
+                                    <p>您好！我是東風 AI 法律助理，為律師樓提供智能化的法律服務支持。</p>
+                                    <p>我可以幫您：</p>
+                                    <ul>
+                                        <li>查詢香港法例及案例</li>
+                                        <li>生成法律文件草稿</li>
+                                        <li>分析會議內容</li>
+                                        <li>撰寫律師信及判詞</li>
+                                    </ul>
+                                    <p>請告訴我您需要什麼幫助？</p>
+                                </div>
+                                <div class="message-time">系統</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input" placeholder="輸入您的法律問題..." onkeypress="handleKeyPress(event)">
+                            <button class="send-btn" onclick="sendMessage()">發送</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view">
+                <div class="dashboard-header">
+                    <h2>系統數據概覽</h2>
+                    <div class="date-range">更新時間：2024年4月28日</div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">💬</div>
+                        <div class="metric-value" id="metric-queries">1,247</div>
+                        <div class="metric-label">AI 查詢總次數</div>
+                        <div class="metric-trend up">↑ 12%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📄</div>
+                        <div class="metric-value" id="metric-docs">89</div>
+                        <div class="metric-label">生成文件數量</div>
+                        <div class="metric-trend up">↑ 8%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📚</div>
+                        <div class="metric-value" id="metric-kb">3,421</div>
+                        <div class="metric-label">知識庫調用次數</div>
+                        <div class="metric-trend up">↑ 23%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⚖</div>
+                        <div class="metric-value" id="metric-cases">23</div>
+                        <div class="metric-label">處理案件數量</div>
+                        <div class="metric-trend up">↑ 5%</div>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <h3>每週使用趨勢</h3>
+                        <div class="bar-chart" id="weekly-chart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>功能使用分佈</h3>
+                        <div class="pie-chart">
+                            <div class="pie-segment" style="--p:45;--c:#d4af37">法律查詢 45%</div>
+                            <div class="pie-segment" style="--p:25;--c:#8b7355">文件生成 25%</div>
+                            <div class="pie-segment" style="--p:20;--c:#5c4d3d">案例分析 20%</div>
+                            <div class="pie-segment" style="--p:10;--c:#3d3428">其他 10%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-section">
+                    <h3>最近活動</h3>
+                    <div class="activity-list" id="activity-list"></div>
+                </div>
+            </section>
+
+            <!-- Admin View -->
+            <section id="admin-view" class="view">
+                <div class="admin-header">
+                    <h2>系統管理後台</h2>
+                </div>
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" data-admin-tab="files">文件管理</button>
+                    <button class="admin-tab-btn" data-admin-tab="users">用戶權限</button>
+                    <button class="admin-tab-btn" data-admin-tab="logs">操作日誌</button>
+                </div>
+                <div class="admin-content">
+                    <div id="admin-files" class="admin-panel active">
+                        <div class="panel-header">
+                            <h3>已上傳文件</h3>
+                            <button class="add-btn" onclick="document.getElementById('admin-file-input').click()">+ 新增文件</button>
+                            <input type="file" id="admin-file-input" hidden multiple>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>文件名稱</th>
+                                    <th>大小</th>
+                                    <th>上傳日期</th>
+                                    <th>類型</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="files-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="admin-users" class="admin-panel">
+                        <div class="panel-header">
+                            <h3>用戶權限管理</h3>
+                            <button class="add-btn">+ 新增用戶</button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>用戶名稱</th>
+                                    <th>角色</th>
+                                    <th>權限等級</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="admin-logs" class="admin-panel">
+                        <div class="panel-header">
+                            <h3>操作日誌</h3>
+                        </div>
+                        <div class="log-list">
+                            <div class="log-item"><span class="log-time">14:32</span><span class="log-user">陳律師</span><span class="log-action">生成判詞草稿</span></div>
+                            <div class="log-item"><span class="log-time">14:15</span><span class="log-user">李助理</span><span class="log-action">查詢公司法條文</span></div>
+                            <div class="log-item"><span class="log-time">13:45</span><span class="log-user">王書記</span><span class="log-action">上傳會議錄音</span></div>
+                            <div class="log-item"><span class="log-time">12:20</span><span class="log-user">陳律師</span><span class="log-action">生成律師信</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
